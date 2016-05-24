@@ -109,7 +109,8 @@
     1. Se elige un número libre de ACL (en este caso, el 1). 
     2. Se introducen en orden todas las regas de la ACL
     3. Se recomienda hacer explícita la regla final de denegación.
-       El resultado sería el siguiente:   
+    4. El resultado sería el siguiente: 
+  
        Permitir el host =10.0.1.1=
          #+BEGIN_EXAMPLE
          access-list 1 permit host 10.0.1.1
