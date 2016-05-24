@@ -121,7 +121,7 @@
 
    Permitir el resto de redes
    #+BEGIN_EXAMPLE
-   access-list 1 allow any
+   access-list 1 permit any
    #+END_EXAMPLE
 
    Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
