@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #+TITLE: Listas de control de acceso en routers CISCO
 #+AUTHOR: Álvaro González Sotillo
 #+EMAIL: alvaro.gonzalezsotillo@educa.madrid.org
@@ -39,20 +40,26 @@
     - Salida de paquetes (Outbound)
 
 * PROCESAMIENTO DE ACL
-  + Al llegar un paquete
+  - Al llegar un paquete
+
     1. Si la interfaz no tiene ACL de entrada, se acepta
     2. Si tiene ACL, se revisan las reglas de la lista
        1. Se comprueban en orden
        2. Si alguna deniega el paquete, se rechaza
        3. Si alguna acepta el paquete, se acepta
        4. Si ninguna se aplica al paquete, se rechaza
-  + Antes de enviar un paquete      
+
+
+
+  - Antes de enviar un paquete      
+
     1. Si la interfaz no tiene ACL de salida, se envía
     2. Si tiene ACL, se revisan las reglas de la lista
        1. Se comprueban en orden
        2. Si alguna deniega el paquete, se desecha
        3. Si alguna acepta el paquete, se envía
        4. Si ninguna se aplica al paquete, se desecha
+
 
 * COMANDOS ÚTILES
 ** Borrar una ACL
@@ -84,10 +91,13 @@
    no ip access-group <numero ACL> <in o out>
    #+END_EXAMPLE
 
+
+
 * ACL ESTANDAR
   #+BEGIN_EXAMPLE
   access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
   #+END_EXAMPLE
+
 
   Solo hacen referencia a las direcciones IP de origen. Se puede especificar:
   + Una Red: Se especifica con IP y WILDCARD (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
@@ -137,22 +147,16 @@
 
 
 
-* ACL AMPLIADAS
-  Pueden hacer referencia a otras características del paquete: 
-  - Dirección de origen y destino
-  - Protocolo ICMP, TCP o UDP
-  - Puerto
-  - Conexión previamente establecida
-  El origen y destino puede especificarse como:
-  - =<IP> <WILDCARD>=
-  - host <IP>: Equivalente a =<IP> 0.0.0.0=
-  - any: Equivalente a =0.0.0.0 255.255.255.255=
 
+
+* ACL AMPLIADAS
+  Pueden hacer referencia a otras características del paquete: protocolo ICMP, TCP o UDP, puerto, conexión establecida...
 ** IP
    #+BEGIN_EXAMPLE
    access-list access-list-number [dynamic dynamic-name [timeout minutes]]
-   {deny | permit} protocol source source-wildcard destination   destination-wildcard
-   [precedence precedence] [tos tos] [log | log-input]  
+   {deny | permit} protocol source source-wildcard destination
+   destination-wildcard
+   [precedence precedence] [tos tos] [log | log-input]
    [time-range time-range-name][fragments]
    #+END_EXAMPLE
 ** Protocolo de mensajes de control de Internet (ICMP)
@@ -216,10 +220,71 @@
    
    #+BEGIN_LATEX
    \textattachfile{ACL-inicial.pkt}{Enlace al fichero PKT}
+=======
+   {deny | permit}
+   icmp source source-wildcard destination destination-wildcard [icmp-type
+   [icmp-code] | [icmp-message]] [precedenceprecedence] [tos tos] [log |
+   log-input] [time-range time-range-name][fragments]
+   #+END_EXAMPLE
+** Protocolo de control de transporte (TCP)
+   #+BEGIN_EXAMPLE
+   access-list access-list-number [dynamic dynamic-name [timeout minutes]]
+   {deny | permit} tcp
+   source source-wildcard [operator [port]] destination destination-wildcard
+   [operator [port]] [established] [precedence precedence] [tos tos] [log |
+   log-input] [time-range time-range-name][fragments]
+   #+END_EXAMPLE
+** Protocolo de datagrama de usuario (UDP)
+   #+BEGIN_EXAMPLE
+   access-list access-list-number [dynamic dynamic-name [timeout minutes]]
+   {deny | permit} udp
+   source source-wildcard [operator [port]] destination destination-wildcard
+   [operator [port]] [precedence precedence] [tos tos] [log | log-input]
+   [time-range time-range-name][fragments]
+   #+END_EXAMPLE
+
+* COMANDOS ÚTILES
+
+** Borrar una ACL
+   #+BEGIN_EXAMPLE
+   no access-list <numero>
+   #+END_EXAMPLE
+   
+** ACL existentes
+   #+BEGIN_EXAMPLE
+   show ip access-list
+   #+END_EXAMPLE
+
+** Interfaces asociadas a ACL
+   #+BEGIN_EXAMPLE
+   show ip interface <interfaz>
+   #+END_EXAMPLE
+   Es necesario mirar el apartado Inbound y Outbound 
+
+** Asociar una ACL a una interfaz
+   #+BEGIN_EXAMPLE
+   interface <interfaz>
+   ip access-group <numero ACL> <in o out>
+   #+END_EXAMPLE
+** Desasociar una ACL a una interfaz
+   #+BEGIN_EXAMPLE
+   interface <interfaz>
+   no ip access-group <numero ACL> <in o out>
+   #+END_EXAMPLE
+
+* EJERCICIO PROPUESTO
+
+** Enunciado
+   [[file+sys:ACL-inicial.pkt]]
+
+   #+BEGIN_LATEX
+   HOLA
+>>>>>>> df3e4f892a2d5d0794c59bc2ff2c06587c07cb93
    #+END_LATEX
 
    [[file:ACL.png]]
   
+<<<<<<< HEAD
    + La LAN puede acceder al servidor de la DMZ y a Internet al servicio WEB.
    + Todo internet puede acceder al servicio WEB de servidor web de la DMZ.
    + El administrador remoto puede acceder a cualquier servicio de la LAN y la DMZ.
@@ -232,6 +297,20 @@
    + Servidor Web:
      - DMZ: 100.0.0.1/28
    + Administrador remoto:
+=======
+   - La LAN puede acceder al servidor de la DMZ y a Internet al servicio WEB.
+   - Todo internet puede acceder al servicio WEB de servidor web de la DMZ.
+   - El administrador remoto puede acceder a cualquier servicio de la LAN y la DMZ.
+   - Todo lo demás está prohibido.
+
+   - Router
+            - Internet: fa9/0 8.0.0.1/8   
+            - DMZ: fa1/0 100.0.0.14/28  
+            - LAN: fa0/0 192.168.1.254/24
+   - Servidor Web:
+     - DMZ: 100.0.0.1/28
+   - Administrador remoto:
+>>>>>>> df3e4f892a2d5d0794c59bc2ff2c06587c07cb93
      - 8.0.0.200
 
 ** Solución    
@@ -239,7 +318,11 @@
 
    - Internet y la LAN pueden acceder al servidor web, se permite al administrador.
 
+<<<<<<< HEAD
      Regla out en Fa1/0
+=======
+    Regla out en Fa1/0
+>>>>>>> df3e4f892a2d5d0794c59bc2ff2c06587c07cb93
     #+BEGIN_EXAMPLE
     access-list 100 permit tcp any any eq www
     access-list 100 permit ip host 8.0.0.200 any
@@ -250,7 +333,11 @@
 
    - La LAN solo puede acceder a los servicios WEB, se permite al administrador.
 
+<<<<<<< HEAD
      Regla in en Fa0/0
+=======
+    Regla in en Fa0/0
+>>>>>>> df3e4f892a2d5d0794c59bc2ff2c06587c07cb93
     #+BEGIN_EXAMPLE
     access-list 101 permit tcp any any eq www
     access-list 101 permit ip any 8.0.0.200 0.0.0.0 
@@ -259,7 +346,11 @@
     ip access-group 101 in
     #+END_EXAMPLE
 
+<<<<<<< HEAD
      Regla out en Fa0/0
+=======
+    Regla out en Fa0/0
+>>>>>>> df3e4f892a2d5d0794c59bc2ff2c06587c07cb93
     #+BEGIN_EXAMPLE
     access-list 102 permit ip host 8.0.0.200 any 
     access-list 102 permit tcp any any established
