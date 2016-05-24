@@ -17,14 +17,15 @@
 #+DESCRIPTION:
 #+KEYWORDS: CISCO, IOS, ACL
 #+SUBTITLE:
-
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 
 
 * LISTAS DE CONTROL DE ACCESO
-  + Las ACL son listas con reglas. 
+  + Las ACL son listas con reglas.
     - Cada regla define una condición que puede cumplir un paquete
     - Cada regla define una acción (=permit=, =deny=) a ejecutar sobre el paquete que cumpla su condición
     - Siempre hay una regla al final que desecha cualquier paquete
+  #+REVEAL: split
   + Se identifican por un número
     - Estándar: 
       - 1 a 99
@@ -45,6 +46,8 @@
        2. Si alguna deniega el paquete, se rechaza
        3. Si alguna acepta el paquete, se acepta
        4. Si ninguna se aplica al paquete, se rechaza
+
+  #+REVEAL: split
   + Antes de enviar un paquete      
     1. Si la interfaz no tiene ACL de salida, se envía
     2. Si tiene ACL, se revisan las reglas de la lista
@@ -52,6 +55,14 @@
        2. Si alguna deniega el paquete, se desecha
        3. Si alguna acepta el paquete, se envía
        4. Si ninguna se aplica al paquete, se desecha
+
+	
+
+
+  #+REVEAL: split
+  #+attr_latex: :width 4in :placement [H]
+  #+attr_org: :width 400
+  [[file:proceso-acl.png]]
 
 * COMANDOS ÚTILES
 ** Borrar una ACL
@@ -82,15 +93,17 @@
   #+BEGIN_EXAMPLE
   access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
   #+END_EXAMPLE
-  Solo hacen referencia a las direcciones IP de origen. Se puede especificar:
-  + Una Red: Se especifica con =IP= y =WILDCARD= (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
-    - Ejemplo: La red =192.168.1.0/24= se especifica como =192.168.1.0 0.0.0.255=
-  + Una dirección IP: Las siguientes especificaciones son equivalentes
-    - =192.168.1.1=
-    - =192.168.1.1 0.0.0.0=
-  + Todas las direcciones: Las siguientes especificaciones son equivalentes
-    - =any=
-    - =0.0.0.0 255.255.255.255=
+  + Solo hacen referencia a las direcciones IP de origen. 
+  #+REVEAL: split
+  + Se puede especificar:
+    + Una Red: Se especifica con =IP= y =WILDCARD= (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
+      - Ejemplo: La red =192.168.1.0/24= se especifica como =192.168.1.0 0.0.0.255=
+    + Una dirección IP: Las siguientes especificaciones son equivalentes
+      - =192.168.1.1=
+      - =192.168.1.1 0.0.0.0=
+    + Todas las direcciones: Las siguientes especificaciones son equivalentes
+      - =any=
+      - =0.0.0.0 255.255.255.255=
 
 ** Ejercicio
 
@@ -167,10 +180,10 @@
    #+END_EXAMPLE
 
 ** Ejercicio
-   Un router une las redes =192.168.1.0/24= (LAN) y =172.16.1.0/24= (DMZ). Se desea que:
-   - Los usuarios de la LAN no puedan realizar PING hacia la DMZ.
-   - El tráfico UPD está permitido por el puerto =53= (DNS)
-   - Las únicas conexiones TCP permitidas entre LAN y DMZ serán las que tengan origen en la LAN.
+   - Un router une las redes =192.168.1.0/24= (LAN) y =172.16.1.0/24= (DMZ). Se desea que:
+     - Los usuarios de la LAN no puedan realizar PING hacia la DMZ.
+     - El tráfico UPD está permitido por el puerto =53= (DNS)
+     - Las únicas conexiones TCP permitidas entre LAN y DMZ serán las que tengan origen en la LAN.
 
    [[file:ejercicio-acl-ampliada.png]]
 
@@ -206,7 +219,8 @@
    [[file:ACL-inicial.pkt][Enlace al fichero PKT inicial]]
 
    [[file:ACL.png]]
-  
+
+   #+REVEAL: split  
    + La LAN puede acceder al servidor de la DMZ y a Internet al servicio WEB.
    + Todo internet puede acceder al servicio WEB de servidor web de la DMZ.
    + El administrador remoto puede acceder a cualquier servicio de la LAN y la DMZ.
