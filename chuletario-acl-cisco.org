@@ -11,13 +11,11 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+LATEX_CLASS: article
-#+LINK_UP:   
-#+LINK_HOME: https://github.com/alvarogonzalezsotillo/redeslocales-smr1/blob/master/chuletario-acl-cisco.org
 #+LATEX_CLASS_OPTIONS:
 #+LATEX_HEADER:
 #+LATEX_HEADER_EXTRA: \usepackage[margin=1.5cm]{geometry} \usepackage{attachfile} \hypersetup{colorlinks,linkcolor=black}
 #+DESCRIPTION:
-#+KEYWORDS:
+#+KEYWORDS: CISCO, IOS, ACL
 #+SUBTITLE:
 
 
@@ -223,7 +221,7 @@
    + Administrador remoto:
      - 8.0.0.200
 
-** Solución    
+** Solución	:noexport:
    Hay Muchas posibles soluciones. En esta se intenta que el Administrador tenga acceso IP completo (ICMP, TCP y UDP)
 
    - Internet y la LAN pueden acceder al servidor web, se permite al administrador.
