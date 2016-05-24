@@ -14,7 +14,7 @@
 #+LINK_HOME:
 #+LATEX_CLASS_OPTIONS:
 #+LATEX_HEADER:
-#+LATEX_HEADER_EXTRA: \usepackage{attachfile}
+#+LATEX_HEADER_EXTRA: \usepackage{attachfile} \hypersetup{colorlinks,linkcolor=black}
 #+DESCRIPTION:
 #+KEYWORDS:
 #+SUBTITLE:
@@ -119,7 +119,7 @@
          #+BEGIN_EXAMPLE
          access-list 1 deny 10.0.0.0 0.1.255.255
          #+END_EXAMPLE
-       Permitir el =resto de redes=
+       Permitir el resto de redes
          #+BEGIN_EXAMPLE
          access-list 1 permit any
          #+END_EXAMPLE
@@ -207,7 +207,7 @@
 ** Enunciado
    
    #+BEGIN_LATEX
-   \textattachfile{ACL-inicial.pkt}{Enlace al fichero PKT inicial}
+   \textattachfile{ACL-inicial.pkt}{Fichero PKT inicial (adjunto al PDF)}
    #+END_LATEX
 
    [[file:ACL-inicial.pkt][Enlace al fichero PKT inicial]]
