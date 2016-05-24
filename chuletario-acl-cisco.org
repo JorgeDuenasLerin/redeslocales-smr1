@@ -10,11 +10,12 @@
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
+#+LATEX_CLASS: article
 #+LINK_UP:   
-#+LINK_HOME:
+#+LINK_HOME: https://github.com/alvarogonzalezsotillo/redeslocales-smr1/blob/master/chuletario-acl-cisco.org
 #+LATEX_CLASS_OPTIONS:
 #+LATEX_HEADER:
-#+LATEX_HEADER_EXTRA: \usepackage{attachfile} \hypersetup{colorlinks,linkcolor=black}
+#+LATEX_HEADER_EXTRA: \usepackage[margin=1.5cm]{geometry} \usepackage{attachfile} \hypersetup{colorlinks,linkcolor=black}
 #+DESCRIPTION:
 #+KEYWORDS:
 #+SUBTITLE:
@@ -56,23 +57,18 @@
 
 * COMANDOS ÚTILES
 ** Borrar una ACL
-
-:BEAMER_env: frame
    #+BEGIN_EXAMPLE
    no access-list <numero>
    #+END_EXAMPLE
-   
 ** Mostrar las ACL existentes
    #+BEGIN_EXAMPLE
    show ip access-list
    #+END_EXAMPLE
-
 ** ACL asociadas a una interfaz
    #+BEGIN_EXAMPLE
    show ip interface <interfaz>
    #+END_EXAMPLE
    Es necesario mirar el apartado Inbound y Outbound 
-
 ** Asociar una ACL a una interfaz
    #+BEGIN_EXAMPLE
    interface <interfaz>
@@ -88,7 +84,6 @@
   #+BEGIN_EXAMPLE
   access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
   #+END_EXAMPLE
-
   Solo hacen referencia a las direcciones IP de origen. Se puede especificar:
   + Una Red: Se especifica con =IP= y =WILDCARD= (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
     - Ejemplo: La red =192.168.1.0/24= se especifica como =192.168.1.0 0.0.0.255=
@@ -202,7 +197,7 @@
    #+END_EXAMPLE
    
 
-* Práctica evaluable
+* Práctica
 
 ** Enunciado
    
