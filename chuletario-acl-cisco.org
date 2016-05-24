@@ -24,7 +24,7 @@
 * LISTAS DE CONTROL DE ACCESO
   + Las ACL son listas con reglas. 
     - Cada regla define una condición que puede cumplir un paquete
-    - Cada regla define una acción (permit, deny) a ejecutar sobre el paquete que cumpla su condición
+    - Cada regla define una acción (=permit=, =deny=) a ejecutar sobre el paquete que cumpla su condición
     - Siempre hay una regla al final que desecha cualquier paquete
   + Se identifican por un número
     - Estándar: 
@@ -90,18 +90,18 @@
   #+END_EXAMPLE
 
   Solo hacen referencia a las direcciones IP de origen. Se puede especificar:
-  + Una Red: Se especifica con IP y WILDCARD (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
-    - Ejemplo: La red 192.168.1.0/24 se especifica como 192.168.1.0 0.0.0.255
+  + Una Red: Se especifica con =IP= y =WILDCARD= (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
+    - Ejemplo: La red =192.168.1.0/24= se especifica como =192.168.1.0 0.0.0.255=
   + Una dirección IP: Las siguientes especificaciones son equivalentes
-    - 192.168.1.1
-    - 192.168.1.1 0.0.0.0
+    - =192.168.1.1=
+    - =192.168.1.1 0.0.0.0=
   + Todas las direcciones: Las siguientes especificaciones son equivalentes
-    - any
-    - 0.0.0.0 255.255.255.255
+    - =any=
+    - =0.0.0.0 255.255.255.255=
 
 ** Ejercicio
 
-   Se desea que la red 10.0.0.0/15 no sea enrutada, excepto el equipo 10.0.1.1, que es del administrador.
+   Se desea que la red =10.0.0.0/15= no sea enrutada, excepto el equipo =10.0.1.1=, que es del administrador.
 
 ** Solución propuesta al ejercicio
 
@@ -109,17 +109,17 @@
    2. Se introducen en orden todas las regas de la ACL
    3. Se recomienda hacer explícita la regla final de denegación
 
-   Permitir el host 10.0.1.1
+   Permitir el host =10.0.1.1=
    #+BEGIN_EXAMPLE
    access-list 1 permit host 10.0.1.1
    #+END_EXAMPLE
 
-   Prohibir la red 10.0.0.0/15
+   Prohibir la red =10.0.0.0/15=
    #+BEGIN_EXAMPLE
    access-list 1 deny 10.0.0.0 0.1.255.255
    #+END_EXAMPLE
 
-   Permitir el resto de redes
+   Permitir el =resto de redes=
    #+BEGIN_EXAMPLE
    access-list 1 permit any
    #+END_EXAMPLE
@@ -129,7 +129,7 @@
    access-list 1 deny any
    #+END_EXAMPLE
 
-   Asociar esta ACL a la interfaz de entrada de la red 10.0.0.0/15
+   Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
    #+BEGIN_EXAMPLE
    interface Fa0/0
    ip access-group 1 in
@@ -143,10 +143,6 @@
   - Protocolo ICMP, TCP o UDP
   - Puerto
   - Conexión previamente establecida
-  El origen y destino puede especificarse como:
-  - =<IP> <WILDCARD>=
-  - host <IP>: Equivalente a =<IP> 0.0.0.0=
-  - any: Equivalente a =0.0.0.0 255.255.255.255=
 
 ** IP
    #+BEGIN_EXAMPLE
@@ -180,9 +176,9 @@
    #+END_EXAMPLE
 
 ** Ejercicio
-   Un router une las redes 192.168.1.0/24 (LAN) y 172.16.1.0/24 (DMZ). Se desea que:
+   Un router une las redes =192.168.1.0/24= (LAN) y =172.16.1.0/24= (DMZ). Se desea que:
    - Los usuarios de la LAN no puedan realizar PING hacia la DMZ.
-   - El tráfico UPD está permitido por el puerto 53 (DNS)
+   - El tráfico UPD está permitido por el puerto =53= (DNS)
    - Las únicas conexiones TCP permitidas entre LAN y DMZ serán las que tengan origen en la LAN.
 
    [[file:ejercicio-acl-ampliada.png]]
@@ -211,12 +207,12 @@
 * Práctica evaluable
 
 ** Enunciado
-
-
    
    #+BEGIN_LATEX
-   \textattachfile{ACL-inicial.pkt}{Enlace al fichero PKT}
+   \textattachfile{ACL-inicial.pkt}{Enlace al fichero PKT inicial}
    #+END_LATEX
+
+   [[file:ACL-inicial.pkt][Enlace al fichero PKT inicial]]
 
    [[file:ACL.png]]
   
