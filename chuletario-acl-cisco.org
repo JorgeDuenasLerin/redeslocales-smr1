@@ -5,7 +5,7 @@
 #+DESCRIPTION: 
 #+KEYWORDS: 
 #+LANGUAGE:  es
-#+OPTIONS:   H:1,2,3 
+#+OPTIONS:   H:3
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -105,35 +105,32 @@
 
 ** Solución propuesta al ejercicio
 
-   1. Se elige un número libre de ACL (en este caso, el 1). 
-   2. Se introducen en orden todas las regas de la ACL
-   3. Se recomienda hacer explícita la regla final de denegación
 
-   Permitir el host =10.0.1.1=
-   #+BEGIN_EXAMPLE
-   access-list 1 permit host 10.0.1.1
-   #+END_EXAMPLE
-
-   Prohibir la red =10.0.0.0/15=
-   #+BEGIN_EXAMPLE
-   access-list 1 deny 10.0.0.0 0.1.255.255
-   #+END_EXAMPLE
-
-   Permitir el =resto de redes=
-   #+BEGIN_EXAMPLE
-   access-list 1 permit any
-   #+END_EXAMPLE
-
-   Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
-   #+BEGIN_EXAMPLE
-   access-list 1 deny any
-   #+END_EXAMPLE
-
-   Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
-   #+BEGIN_EXAMPLE
-   interface Fa0/0
-   ip access-group 1 in
-  #+END_EXAMPLE
+    1. Se elige un número libre de ACL (en este caso, el 1). 
+    2. Se introducen en orden todas las regas de la ACL
+    3. Se recomienda hacer explícita la regla final de denegación.
+       El resultado sería el siguiente:   
+       Permitir el host =10.0.1.1=
+         #+BEGIN_EXAMPLE
+         access-list 1 permit host 10.0.1.1
+         #+END_EXAMPLE
+       Prohibir la red =10.0.0.0/15=
+         #+BEGIN_EXAMPLE
+         access-list 1 deny 10.0.0.0 0.1.255.255
+         #+END_EXAMPLE
+       Permitir el =resto de redes=
+         #+BEGIN_EXAMPLE
+         access-list 1 permit any
+         #+END_EXAMPLE
+       Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
+         #+BEGIN_EXAMPLE
+         access-list 1 deny any
+         #+END_EXAMPLE
+       Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
+         #+BEGIN_EXAMPLE
+         interface Fa0/0
+         ip access-group 1 in
+        #+END_EXAMPLE
 
 
 
