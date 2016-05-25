@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Listas de control de acceso en routers CISCO</title>
+<meta name="author" content="(Álvaro González Sotillo)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=" CISCO, IOS, ACL"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Listas de control de acceso en routers CISCO</h1><h2 class="author">Álvaro González Sotillo</h2><h2 class="date">\today</h2><p class="date">Created: 2016-05-24 mar 21:47</p>
+</section>
+<section id="table-of-contents">
+<div id="table-of-contents">
+<h2>&Iacute;ndice</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">1. LISTAS DE CONTROL DE ACCESO</a></li>
+<li><a href="#/slide-orgheadline2">2. PROCESAMIENTO DE ACL</a></li>
+<li><a href="#/slide-orgheadline8">3. COMANDOS ÚTILES</a>
+<ul>
+<li><a href="#/slide-orgheadline3">3.1. Borrar una ACL</a></li>
+<li><a href="#/slide-orgheadline4">3.2. Mostrar las ACL existentes</a></li>
+<li><a href="#/slide-orgheadline5">3.3. ACL asociadas a una interfaz</a></li>
+<li><a href="#/slide-orgheadline6">3.4. Asociar una ACL a una interfaz</a></li>
+<li><a href="#/slide-orgheadline7">3.5. Eliminar una ACL de una interfaz</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgheadline11">4. ACL ESTANDAR</a>
+<ul>
+<li><a href="#/slide-orgheadline9">4.1. Ejercicio</a></li>
+<li><a href="#/slide-orgheadline10">4.2. Solución propuesta al ejercicio</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgheadline18">5. ACL AMPLIADAS</a>
+<ul>
+<li><a href="#/slide-orgheadline12">5.1. IP</a></li>
+<li><a href="#/slide-orgheadline13">5.2. Protocolo de mensajes de control de Internet (ICMP)</a></li>
+<li><a href="#/slide-orgheadline14">5.3. Protocolo de control de transporte (TCP)</a></li>
+<li><a href="#/slide-orgheadline15">5.4. Protocolo de datagrama de usuario (UDP)</a></li>
+<li><a href="#/slide-orgheadline16">5.5. Ejercicio</a></li>
+<li><a href="#/slide-orgheadline17">5.6. Solución propuesta</a></li>
+</ul>
+</li>
+<li><a href="#/slide-orgheadline20">6. Práctica</a>
+<ul>
+<li><a href="#/slide-orgheadline19">6.1. Enunciado</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> LISTAS DE CONTROL DE ACCESO</h2>
+<ul>
+<li>Las ACL son listas con reglas.
+<ul>
+<li>Cada regla define una condición que puede cumplir un paquete</li>
+<li>Cada regla define una acción (<code>permit</code>, <code>deny</code>) a ejecutar sobre el paquete que cumpla su condición</li>
+<li>Siempre hay una regla al final que desecha cualquier paquete</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li>Se identifican por un número
+<ul>
+<li>Estándar: 
+<ul>
+<li>1 a 99</li>
+<li>1300 a 1999</li>
+
+</ul></li>
+<li>Ampliadas: 
+<ul>
+<li>100 a 199</li>
+<li>2000 a 2699</li>
+
+</ul></li>
+
+</ul></li>
+<li>En versiones recientes de IOS (11.2) se pueden usar también nombres de ACL</li>
+<li>Una interfaz puede tener una ACL asociada en cada sentido
+<ul>
+<li>Entrada de paquetes (Inbound)</li>
+<li>Salida de paquetes (Outbound)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> PROCESAMIENTO DE ACL</h2>
+<ul>
+<li>Al llegar un paquete
+<ol>
+<li>Si la interfaz no tiene ACL de entrada, se acepta</li>
+<li>Si tiene ACL, se revisan las reglas de la lista
+<ol>
+<li>Se comprueban en orden</li>
+<li>Si alguna deniega el paquete, se rechaza</li>
+<li>Si alguna acepta el paquete, se acepta</li>
+<li>Si ninguna se aplica al paquete, se rechaza</li>
+
+</ol></li>
+
+</ol></li>
+
+</ul>
+
+</section>
+<section>
+<ul>
+<li>Antes de enviar un paquete      
+<ol>
+<li>Si la interfaz no tiene ACL de salida, se envía</li>
+<li>Si tiene ACL, se revisan las reglas de la lista
+<ol>
+<li>Se comprueban en orden</li>
+<li>Si alguna deniega el paquete, se desecha</li>
+<li>Si alguna acepta el paquete, se envía</li>
+<li>Si ninguna se aplica al paquete, se desecha</li>
+
+</ol></li>
+
+</ol></li>
+
+</ul>
+
+
+
+
+</section>
+<section>
+
+<div class="figure">
+<p><img src="proceso-acl.png" alt="proceso-acl.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline8">
+<h2 id="orgheadline8"><span class="section-number-2">3</span> COMANDOS ÚTILES</h2>
+<div class="outline-text-2" id="text-3">
+</div></section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3"><span class="section-number-3">3.1</span> Borrar una ACL</h3>
+<pre class="example">
+no access-list &lt;numero&gt;
+</pre>
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4"><span class="section-number-3">3.2</span> Mostrar las ACL existentes</h3>
+<pre class="example">
+show ip access-list
+</pre>
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5"><span class="section-number-3">3.3</span> ACL asociadas a una interfaz</h3>
+<pre class="example">
+show ip interface &lt;interfaz&gt;
+</pre>
+<p>
+Es necesario mirar el apartado Inbound y Outbound 
+</p>
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6"><span class="section-number-3">3.4</span> Asociar una ACL a una interfaz</h3>
+<pre class="example">
+interface &lt;interfaz&gt;
+ip access-group &lt;numero ACL&gt; &lt;out o in&gt;
+</pre>
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7"><span class="section-number-3">3.5</span> Eliminar una ACL de una interfaz</h3>
+<pre class="example">
+interface &lt;interfaz&gt;
+no ip access-group &lt;numero ACL&gt; &lt;in o out&gt;
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline11">
+<h2 id="orgheadline11"><span class="section-number-2">4</span> ACL ESTANDAR</h2>
+<pre class="example">
+access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
+</pre>
+<ul>
+<li>Solo hacen referencia a las direcciones IP de origen.</li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li>Se puede especificar:
+<ul>
+<li>Una Red: Se especifica con <code>IP</code> y <code>WILDCARD</code> (no IP y máscara). El WILDCARD es la máscara de red con ceros y unos invertidos.
+<ul>
+<li>Ejemplo: La red <code>192.168.1.0/24</code> se especifica como <code>192.168.1.0 0.0.0.255</code></li>
+
+</ul></li>
+<li>Una dirección IP: Las siguientes especificaciones son equivalentes
+<ul>
+<li><code>192.168.1.1</code></li>
+<li><code>192.168.1.1 0.0.0.0</code></li>
+
+</ul></li>
+<li>Todas las direcciones: Las siguientes especificaciones son equivalentes
+<ul>
+<li><code>any</code></li>
+<li><code>0.0.0.0 255.255.255.255</code></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9"><span class="section-number-3">4.1</span> Ejercicio</h3>
+<p>
+Se desea que la red <code>10.0.0.0/15</code> no sea enrutada, excepto el equipo <code>10.0.1.1</code>, que es del administrador.
+</p>
+
+</section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10"><span class="section-number-3">4.2</span> Solución propuesta al ejercicio</h3>
+<ol>
+<li>Se elige un número libre de ACL (en este caso, el 1).</li>
+<li>Se introducen en orden todas las regas de la ACL</li>
+<li>Se recomienda hacer explícita la regla final de denegación.</li>
+<li><p>
+El resultado sería el siguiente: 
+</p>
+
+<p>
+Permitir el host <code>10.0.1.1</code>
+</p>
+<pre class="example">
+access-list 1 permit host 10.0.1.1
+</pre>
+<p>
+Prohibir la red <code>10.0.0.0/15</code>
+</p>
+<pre class="example">
+access-list 1 deny 10.0.0.0 0.1.255.255
+</pre>
+<p>
+Permitir el resto de redes
+</p>
+<pre class="example">
+access-list 1 permit any
+</pre>
+<p>
+Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
+</p>
+<pre class="example">
+access-list 1 deny any
+</pre>
+<p>
+Asociar esta ACL a la interfaz de entrada de la red <code>10.0.0.0/15</code>
+</p>
+<pre class="example">
+interface Fa0/0
+ip access-group 1 in
+</pre></li>
+
+</ol>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline18">
+<h2 id="orgheadline18"><span class="section-number-2">5</span> ACL AMPLIADAS</h2>
+<p>
+Pueden hacer referencia a otras características del paquete: 
+</p>
+<ul>
+<li>Dirección de origen y destino</li>
+<li>Protocolo ICMP, TCP o UDP</li>
+<li>Puerto</li>
+<li>Conexión previamente establecida</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12"><span class="section-number-3">5.1</span> IP</h3>
+<pre class="example">
+access-list access-list-number [dynamic dynamic-name [timeout minutes]]
+{deny | permit} protocol source source-wildcard destination   destination-wildcard
+[precedence precedence] [tos tos] [log | log-input]  
+[time-range time-range-name][fragments]
+</pre>
+</section>
+<section id="slide-orgheadline13">
+<h3 id="orgheadline13"><span class="section-number-3">5.2</span> Protocolo de mensajes de control de Internet (ICMP)</h3>
+<pre class="example">
+access-list access-list-number [dynamic dynamic-name [timeout minutes]]
+{deny | permit}   icmp source source-wildcard destination destination-wildcard
+[icmp-type   [icmp-code] | [icmp-message]] [precedenceprecedence] [tos tos] 
+[log |   log-input] [time-range time-range-name][fragments]
+</pre>
+</section>
+<section id="slide-orgheadline14">
+<h3 id="orgheadline14"><span class="section-number-3">5.3</span> Protocolo de control de transporte (TCP)</h3>
+<pre class="example">
+access-list access-list-number [dynamic dynamic-name [timeout minutes]]  
+{deny | permit} tcp   source source-wildcard [operator [port]] 
+destination destination-wildcard   [operator [port]] [established] 
+[precedence precedence] [tos tos] [log |   log-input] 
+[time-range time-range-name][fragments]
+</pre>
+</section>
+<section id="slide-orgheadline15">
+<h3 id="orgheadline15"><span class="section-number-3">5.4</span> Protocolo de datagrama de usuario (UDP)</h3>
+<pre class="example">
+access-list access-list-number [dynamic dynamic-name [timeout minutes]]   
+{deny | permit} udp   source source-wildcard [operator [port]] 
+destination destination-wildcard   [operator [port]]
+[precedence precedence] [tos tos] [log | log-input] 
+[time-range time-range-name][fragments]
+</pre>
+
+</section>
+<section id="slide-orgheadline16">
+<h3 id="orgheadline16"><span class="section-number-3">5.5</span> Ejercicio</h3>
+<ul>
+<li>Un router une las redes <code>192.168.1.0/24</code> (LAN) y <code>172.16.1.0/24</code> (DMZ). Se desea que:
+<ul>
+<li>Los usuarios de la LAN no puedan realizar PING hacia la DMZ.</li>
+<li>El tráfico UPD está permitido por el puerto <code>53</code> (DNS)</li>
+<li>Las únicas conexiones TCP permitidas entre LAN y DMZ serán las que tengan origen en la LAN.</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="ejercicio-acl-ampliada.png" alt="ejercicio-acl-ampliada.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline17">
+<h3 id="orgheadline17"><span class="section-number-3">5.6</span> Solución propuesta</h3>
+<p>
+Esta ACL debe colocarse en la tarjeta de la LAN, sentido inbound.
+</p>
+<pre class="example">
+access-list 100 deny icmp any any
+access-list 100 permit udp any any eq domain
+access-list 100 permit tcp any any
+access-list 100 deny ip any any
+interface Fa0/0
+ip access-group 100 in
+</pre>
+
+<p>
+Esta ACL debe colocarse en la tarjeta de la LAN, sentido outbound
+</p>
+<pre class="example">
+access-list 101 permit udp any eq 53 any
+access-list 101 permit tcp any any established
+access-list 101 deny ip any any
+interface Fa0/0
+ip access-group 101 out
+</pre>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline20">
+<h2 id="orgheadline20"><span class="section-number-2">6</span> Práctica</h2>
+<div class="outline-text-2" id="text-6">
+</div></section>
+<section id="slide-orgheadline19">
+<h3 id="orgheadline19"><span class="section-number-3">6.1</span> Enunciado</h3>
+<p>
+<a href="ACL-inicial.pkt">Enlace al fichero PKT inicial</a>
+</p>
+
+
+<div class="figure">
+<p><img src="ACL.png" alt="ACL.png" />
+</p>
+</div>
+
+</section>
+<section>
+<ul>
+<li>La LAN puede acceder al servidor de la DMZ y a Internet al servicio WEB.</li>
+<li>Todo internet puede acceder al servicio WEB de servidor web de la DMZ.</li>
+<li>El administrador remoto puede acceder a cualquier servicio de la LAN y la DMZ.</li>
+<li>Todo lo demás está prohibido.</li>
+
+<li>Router
+<ul>
+<li>Internet: fa9/0 8.0.0.1/8</li>
+<li>DMZ: fa1/0 100.0.0.14/28</li>
+<li>LAN: fa0/0 192.168.1.254/24</li>
+
+</ul></li>
+<li>Servidor Web:
+<ul>
+<li>DMZ: 100.0.0.1/28</li>
+
+</ul></li>
+<li>Administrador remoto:
+<ul>
+<li>8.0.0.200</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
