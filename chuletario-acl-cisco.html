@@ -11,9 +11,9 @@
 </style>
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
 
-<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css" id="theme"/>
 
-
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css"/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
@@ -28,7 +28,7 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Listas de control de acceso en routers CISCO</h1><h2 class="author">Álvaro González Sotillo</h2><h2 class="date">\today</h2><p class="date">Created: 2016-05-24 mar 21:47</p>
+<section id="sec-title-slide"><h1 class="title">Listas de control de acceso en routers CISCO</h1><h2 class="author">Álvaro González Sotillo</h2><h2 class="date">\today</h2><p class="date">Created: 2016-05-25 mié 09:43</p>
 </section>
 <section id="table-of-contents">
 <div id="table-of-contents">
@@ -75,6 +75,7 @@
 
 <section>
 <section id="slide-orgheadline1">
+<div class="slide-header"></div>
 <h2 id="orgheadline1"><span class="section-number-2">1</span> LISTAS DE CONTROL DE ACCESO</h2>
 <ul>
 <li>Las ACL son listas con reglas.
@@ -115,10 +116,12 @@
 
 </ul>
 
+<div class="slide-footer"></div>
 </section>
 </section>
 <section>
-<section id="slide-orgheadline2">
+<section id="slide-orgheadline2" data-background="./proceso-acl.png">
+<div class="slide-header"></div>
 <h2 id="orgheadline2"><span class="section-number-2">2</span> PROCESAMIENTO DE ACL</h2>
 <ul>
 <li>Al llegar un paquete
@@ -167,26 +170,34 @@
 </p>
 </div>
 
+<div class="slide-footer"></div>
 </section>
 </section>
 <section>
 <section id="slide-orgheadline8">
+<div class="slide-header"></div>
 <h2 id="orgheadline8"><span class="section-number-2">3</span> COMANDOS ÚTILES</h2>
 <div class="outline-text-2" id="text-3">
-</div></section>
+</div><div class="slide-footer"></div>
+</section>
 <section id="slide-orgheadline3">
+<div class="slide-header"></div>
 <h3 id="orgheadline3"><span class="section-number-3">3.1</span> Borrar una ACL</h3>
 <pre class="example">
 no access-list &lt;numero&gt;
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline4">
+<div class="slide-header"></div>
 <h3 id="orgheadline4"><span class="section-number-3">3.2</span> Mostrar las ACL existentes</h3>
 <pre class="example">
 show ip access-list
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline5">
+<div class="slide-header"></div>
 <h3 id="orgheadline5"><span class="section-number-3">3.3</span> ACL asociadas a una interfaz</h3>
 <pre class="example">
 show ip interface &lt;interfaz&gt;
@@ -194,28 +205,35 @@ show ip interface &lt;interfaz&gt;
 <p>
 Es necesario mirar el apartado Inbound y Outbound 
 </p>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline6">
+<div class="slide-header"></div>
 <h3 id="orgheadline6"><span class="section-number-3">3.4</span> Asociar una ACL a una interfaz</h3>
 <pre class="example">
 interface &lt;interfaz&gt;
 ip access-group &lt;numero ACL&gt; &lt;out o in&gt;
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline7">
+<div class="slide-header"></div>
 <h3 id="orgheadline7"><span class="section-number-3">3.5</span> Eliminar una ACL de una interfaz</h3>
 <pre class="example">
 interface &lt;interfaz&gt;
 no ip access-group &lt;numero ACL&gt; &lt;in o out&gt;
 </pre>
 
+<div class="slide-footer"></div>
 </section>
 </section>
 <section>
 <section id="slide-orgheadline11">
+<div class="slide-header"></div>
 <h2 id="orgheadline11"><span class="section-number-2">4</span> ACL ESTANDAR</h2>
 <pre class="example">
-access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
+access-list access-list-number {permit|deny} 
+{host|source source-wildcard|any}.
 </pre>
 <ul>
 <li>Solo hacen referencia a las direcciones IP de origen.</li>
@@ -248,49 +266,56 @@ access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
 
 </ul>
 
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline9">
+<div class="slide-header"></div>
 <h3 id="orgheadline9"><span class="section-number-3">4.1</span> Ejercicio</h3>
 <p>
 Se desea que la red <code>10.0.0.0/15</code> no sea enrutada, excepto el equipo <code>10.0.1.1</code>, que es del administrador.
 </p>
 
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline10">
+<div class="slide-header"></div>
 <h3 id="orgheadline10"><span class="section-number-3">4.2</span> Solución propuesta al ejercicio</h3>
 <ol>
 <li>Se elige un número libre de ACL (en este caso, el 1).</li>
 <li>Se introducen en orden todas las regas de la ACL</li>
 <li>Se recomienda hacer explícita la regla final de denegación.</li>
-<li><p>
-El resultado sería el siguiente: 
-</p>
+<li>El resultado sería el siguiente:</li>
 
-<p>
+</ol>
+
+</section>
+<section>
+<ul>
+<li><p>
 Permitir el host <code>10.0.1.1</code>
 </p>
 <pre class="example">
 access-list 1 permit host 10.0.1.1
-</pre>
-<p>
+</pre></li>
+<li><p>
 Prohibir la red <code>10.0.0.0/15</code>
 </p>
 <pre class="example">
 access-list 1 deny 10.0.0.0 0.1.255.255
-</pre>
-<p>
+</pre></li>
+<li><p>
 Permitir el resto de redes
 </p>
 <pre class="example">
 access-list 1 permit any
-</pre>
-<p>
+</pre></li>
+<li><p>
 Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
 </p>
 <pre class="example">
 access-list 1 deny any
-</pre>
-<p>
+</pre></li>
+<li><p>
 Asociar esta ACL a la interfaz de entrada de la red <code>10.0.0.0/15</code>
 </p>
 <pre class="example">
@@ -298,14 +323,16 @@ interface Fa0/0
 ip access-group 1 in
 </pre></li>
 
-</ol>
+</ul>
 
 
 
+<div class="slide-footer"></div>
 </section>
 </section>
 <section>
 <section id="slide-orgheadline18">
+<div class="slide-header"></div>
 <h2 id="orgheadline18"><span class="section-number-2">5</span> ACL AMPLIADAS</h2>
 <p>
 Pueden hacer referencia a otras características del paquete: 
@@ -318,8 +345,10 @@ Pueden hacer referencia a otras características del paquete:
 
 </ul>
 
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline12">
+<div class="slide-header"></div>
 <h3 id="orgheadline12"><span class="section-number-3">5.1</span> IP</h3>
 <pre class="example">
 access-list access-list-number [dynamic dynamic-name [timeout minutes]]
@@ -327,8 +356,10 @@ access-list access-list-number [dynamic dynamic-name [timeout minutes]]
 [precedence precedence] [tos tos] [log | log-input]  
 [time-range time-range-name][fragments]
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline13">
+<div class="slide-header"></div>
 <h3 id="orgheadline13"><span class="section-number-3">5.2</span> Protocolo de mensajes de control de Internet (ICMP)</h3>
 <pre class="example">
 access-list access-list-number [dynamic dynamic-name [timeout minutes]]
@@ -336,8 +367,10 @@ access-list access-list-number [dynamic dynamic-name [timeout minutes]]
 [icmp-type   [icmp-code] | [icmp-message]] [precedenceprecedence] [tos tos] 
 [log |   log-input] [time-range time-range-name][fragments]
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline14">
+<div class="slide-header"></div>
 <h3 id="orgheadline14"><span class="section-number-3">5.3</span> Protocolo de control de transporte (TCP)</h3>
 <pre class="example">
 access-list access-list-number [dynamic dynamic-name [timeout minutes]]  
@@ -346,8 +379,10 @@ destination destination-wildcard   [operator [port]] [established]
 [precedence precedence] [tos tos] [log |   log-input] 
 [time-range time-range-name][fragments]
 </pre>
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline15">
+<div class="slide-header"></div>
 <h3 id="orgheadline15"><span class="section-number-3">5.4</span> Protocolo de datagrama de usuario (UDP)</h3>
 <pre class="example">
 access-list access-list-number [dynamic dynamic-name [timeout minutes]]   
@@ -357,8 +392,10 @@ destination destination-wildcard   [operator [port]]
 [time-range time-range-name][fragments]
 </pre>
 
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline16">
+<div class="slide-header"></div>
 <h3 id="orgheadline16"><span class="section-number-3">5.5</span> Ejercicio</h3>
 <ul>
 <li>Un router une las redes <code>192.168.1.0/24</code> (LAN) y <code>172.16.1.0/24</code> (DMZ). Se desea que:
@@ -377,8 +414,10 @@ destination destination-wildcard   [operator [port]]
 </p>
 </div>
 
+<div class="slide-footer"></div>
 </section>
 <section id="slide-orgheadline17">
+<div class="slide-header"></div>
 <h3 id="orgheadline17"><span class="section-number-3">5.6</span> Solución propuesta</h3>
 <p>
 Esta ACL debe colocarse en la tarjeta de la LAN, sentido inbound.
@@ -404,14 +443,18 @@ ip access-group 101 out
 </pre>
 
 
+<div class="slide-footer"></div>
 </section>
 </section>
 <section>
 <section id="slide-orgheadline20">
+<div class="slide-header"></div>
 <h2 id="orgheadline20"><span class="section-number-2">6</span> Práctica</h2>
 <div class="outline-text-2" id="text-6">
-</div></section>
+</div><div class="slide-footer"></div>
+</section>
 <section id="slide-orgheadline19">
+<div class="slide-header"></div>
 <h3 id="orgheadline19"><span class="section-number-3">6.1</span> Enunciado</h3>
 <p>
 <a href="ACL-inicial.pkt">Enlace al fichero PKT inicial</a>
@@ -433,23 +476,24 @@ ip access-group 101 out
 
 <li>Router
 <ul>
-<li>Internet: fa9/0 8.0.0.1/8</li>
-<li>DMZ: fa1/0 100.0.0.14/28</li>
-<li>LAN: fa0/0 192.168.1.254/24</li>
+<li>Internet: <code>fa9/0 8.0.0.1/8</code></li>
+<li>DMZ: <code>Fa1/0 100.0.0.14/28</code></li>
+<li>LAN: <code>Fa0/0 192.168.1.254/24</code></li>
 
 </ul></li>
 <li>Servidor Web:
 <ul>
-<li>DMZ: 100.0.0.1/28</li>
+<li>DMZ: <code>100.0.0.1/28</code></li>
 
 </ul></li>
 <li>Administrador remoto:
 <ul>
-<li>8.0.0.200</li>
+<li><code>8.0.0.200</code></li>
 
 </ul></li>
 
 </ul>
+<div class="slide-footer"></div>
 </section>
 </section>
 </div>
@@ -482,11 +526,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
 });
 </script>
 </body>

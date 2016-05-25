@@ -18,6 +18,11 @@
 #+KEYWORDS: CISCO, IOS, ACL
 #+SUBTITLE:
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: white
+#+REVEAL_SLIDE_FOOTER:
+#+REVEAL_SLIDE_HEADER:
+#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_BACKGROUND: ./proceso-acl.png
 
 
 * LISTAS DE CONTROL DE ACCESO
@@ -39,6 +44,10 @@
     - Salida de paquetes (Outbound)
 
 * PROCESAMIENTO DE ACL
+  :PROPERTIES:
+  :reveal_background: ./proceso-acl.png
+  :END:
+
   + Al llegar un paquete
     1. Si la interfaz no tiene ACL de entrada, se acepta
     2. Si tiene ACL, se revisan las reglas de la lista
@@ -91,7 +100,8 @@
 
 * ACL ESTANDAR
   #+BEGIN_EXAMPLE
-  access-list access-list-number {permit|deny} {host|source source-wildcard|any}.
+  access-list access-list-number {permit|deny} 
+  {host|source source-wildcard|any}.
   #+END_EXAMPLE
   + Solo hacen referencia a las direcciones IP de origen. 
   #+REVEAL: split
@@ -116,24 +126,25 @@
     2. Se introducen en orden todas las regas de la ACL
     3. Se recomienda hacer explícita la regla final de denegación.
     4. El resultado sería el siguiente: 
-  
-       Permitir el host =10.0.1.1=
+       
+    #+REVEAL: split   
+       - Permitir el host =10.0.1.1=
          #+BEGIN_EXAMPLE
          access-list 1 permit host 10.0.1.1
          #+END_EXAMPLE
-       Prohibir la red =10.0.0.0/15=
+       - Prohibir la red =10.0.0.0/15=
          #+BEGIN_EXAMPLE
          access-list 1 deny 10.0.0.0 0.1.255.255
          #+END_EXAMPLE
-       Permitir el resto de redes
+       - Permitir el resto de redes
          #+BEGIN_EXAMPLE
          access-list 1 permit any
          #+END_EXAMPLE
-       Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
+       - Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
          #+BEGIN_EXAMPLE
          access-list 1 deny any
          #+END_EXAMPLE
-       Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
+       - Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
          #+BEGIN_EXAMPLE
          interface Fa0/0
          ip access-group 1 in
@@ -227,13 +238,13 @@
    + Todo lo demás está prohibido.
 
    + Router
-     - Internet: fa9/0 8.0.0.1/8   
-     - DMZ: fa1/0 100.0.0.14/28  
-     - LAN: fa0/0 192.168.1.254/24
+     - Internet: =Fa9/0 8.0.0.1/8=
+     - DMZ: =Fa1/0 100.0.0.14/28=  
+     - LAN: =Fa0/0 192.168.1.254/24=
    + Servidor Web:
-     - DMZ: 100.0.0.1/28
+     - DMZ: =100.0.0.1/28=
    + Administrador remoto:
-     - 8.0.0.200
+     - =8.0.0.200=
 
 ** Solución	:noexport:
    Hay Muchas posibles soluciones. En esta se intenta que el Administrador tenga acceso IP completo (ICMP, TCP y UDP)
