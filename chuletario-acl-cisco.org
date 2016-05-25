@@ -22,10 +22,6 @@
     - Salida de paquetes (Outbound)
 
 * PROCESAMIENTO DE ACL
-  :PROPERTIES:
-  :reveal_background: ./proceso-acl.png
-  :END:
-
   + Al llegar un paquete
     1. Si la interfaz no tiene ACL de entrada, se acepta
     2. Si tiene ACL, se revisan las reglas de la lista
