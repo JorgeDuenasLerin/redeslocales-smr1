@@ -1,0 +1,8 @@
+Existen los siguientes tipos de ACL en los routers CISCO
+{
+  = Estandar y ampliadas
+  ~ Solo hay un tipo de ACL
+  ~ Estandar, ampliadas y compuestas
+  ~ Ampliadas y compuestas
+}
+
