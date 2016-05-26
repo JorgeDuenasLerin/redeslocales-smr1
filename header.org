@@ -20,6 +20,14 @@
 #+REVEAL_SLIDE_FOOTER:
 #+REVEAL_SLIDE_HEADER:
 #+REVEAL_PLUGINS: (highlight)
+#+NAME: imagen-para-org
+#+BEGIN_SRC emacs-lisp :exports none :var nombrefichero="faltafichero"
+(defun imagen-para-org (nombrefichero) 
+  (case (and (boundp 'backend) (org-export-backend-name backend))
+    (latex (concatenate 'string "[[file:" nombrefichero ".pdf]]")
+    (t (concatenate 'string "[[file:" nombrefichero ".png]]")))
+#+END_SRC
+
 
 
 
