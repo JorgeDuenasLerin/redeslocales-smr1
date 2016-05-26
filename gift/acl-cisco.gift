@@ -1,8 +1,33 @@
 Existen los siguientes tipos de ACL en los routers CISCO
 {
-  = Estandar y ampliadas
-  ~ Solo hay un tipo de ACL
-  ~ Estandar, ampliadas y compuestas
-  ~ Ampliadas y compuestas
+        = Estandar y ampliadas
+        ~ Solo hay un tipo de ACL
+        ~ Estandar, ampliadas y compuestas
+        ~ Ampliadas y compuestas
 }
 
+Las ACL estandar
+{
+        = Filtran solo por la IP de origen
+        ~ Filtran por IP de origen y destino
+        ~ Filtran por la interfaz que recibe el paquete
+        ~ Filtran por la interfaz que reenvia el paquete
+}
+
+access-list 10 deny any
+{
+        = Prohibe cualquier paquete
+        ~ Prohibe que entre por la interfaz cualquier paquete, pero permite su salida
+        ~ Permite que entre por la interfaz cualquier paquete, pero prohibe su salida
+        ~ Es incorrecta, porque es una ACL estandar, pero el numero 10 no puede asignarse a esas ACL
+}
+
+
+Un router CISCO tiene asignada la IP 192.168.20.254/24 a la interfaz Fa0/0 y la IP 192.168.10.254/24 a la interfaz Fa1/0. Escribe los comandos necesarios para que:
+<ul>
+        <li>Los equipos 192.168.20.1 a 192.168.20.31 no puedan acceder a la red 192.168.10.0/24</li>
+        <li>El resto de equipos solo pueden acceder a la otra red con el protocolo TCP, por los puertos de HTTP, SSH y RDP</li>
+        <li>Todas las demas comunicaciones (UDP,ICMP) quedan prohibidas</li>
+</ul>
+{
+}
