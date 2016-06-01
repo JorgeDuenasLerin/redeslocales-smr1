@@ -1639,7 +1639,7 @@ body {
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Listas de control de acceso en routers CISCO</h1><h2 class="author">Álvaro González Sotillo</h2><p class="date">Created: 2016-05-31 mar 14:32</p>
+<section id="sec-title-slide"><h1 class="title">Listas de control de acceso en routers CISCO</h1><h2 class="author">Álvaro González Sotillo</h2><p class="date">Created: 2016-06-01 mié 09:57</p>
 </section>
 <section id="table-of-contents">
 <div id="table-of-contents">
@@ -2932,11 +2932,48 @@ DACAOAYAAMQxAADiGAAAEMcAAFea/w/iakOuJuZInQAAAABJRU5ErkJggg==" />
 </section>
 <section id="slide-orgheadline18">
 <div class="slide-header"></div>
-<h3 id="orgheadline18"><span class="section-number-3">6.2</span> PLANTEAMIENTO</h3>
-<p>
-Interfaz Fa0/1 (LAN)
-</p>
+<h3 id="orgheadline18"><span class="section-number-3">6.2</span> Planteamiento</h3>
+<ul>
+<li>Interfaz Fa0/1 (LAN) Permitido</li>
 
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Entrada</th>
+<th scope="col" class="org-left">Salida</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">✓ <i>DNS (UDP con destino 53)</i></td>
+<td class="org-left">✓ <i>DNS (UDP con origen 53)</i></td>
+</tr>
+
+<tr>
+<td class="org-left">✓ <i>TCP si se ha establecido desde la LAN</i></td>
+<td class="org-left">✓ <i>TCP si se ha establecido desde la LAN</i></td>
+</tr>
+
+<tr>
+<td class="org-left">✓ <i>TCP si es una conexión entrante de la DMZ</i></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Interfaz Fa0/1 (LAN) Prohibido</li>
+
+</ul>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -2960,18 +2997,8 @@ Interfaz Fa0/1 (LAN)
 </tr>
 
 <tr>
-<td class="org-left">✓ <i>DNS (UDP con destino 53)</i></td>
-<td class="org-left">✓ <i>DNS (UDP con origen 53)</i></td>
-</tr>
-
-<tr>
-<td class="org-left">✓ <i>TCP si se ha establecido desde la LAN</i></td>
-<td class="org-left">✓ <i>TCP si se ha establecido desde la LAN</i></td>
-</tr>
-
-<tr>
-<td class="org-left">✓ <i>TCP si es una conexión entrante de la DMZ</i></td>
-<td class="org-left">✗ TCP si es una conexión entranta de la DMZ</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">✗ TCP si es una conexión entrante de la DMZ</td>
 </tr>
 
 <tr>
@@ -2980,6 +3007,7 @@ Interfaz Fa0/1 (LAN)
 </tr>
 </tbody>
 </table>
+
 </section>
 <section>
 
@@ -4277,13 +4305,21 @@ RURERERERBS4ioiIiIiIiAJXEREREREREQWuIiIiIiIiIgpcRURERERERIGriIiIiIiISKX5/6b3
 <li>DMZ: <code>100.0.0.1/28</code></li>
 
 </ul></li>
-<li>Administrador remoto:
-<ul>
-<li><code>8.0.0.200</code></li>
-
-</ul></li>
+<li>Administrador remoto:</li>
 
 </ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">- <code>8.0.0.200</code></td>
+</tr>
+</tbody>
+</table>
 <div class="slide-footer"></div>
 </section>
 </section>
@@ -9067,7 +9103,7 @@ multiplex: {
     id: '', // id, obtained from socket.io server
     url: '' // Location of socket.io server
 },
-width: '100%'});
+});
 </script>
 </body>
 </html>
