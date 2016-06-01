@@ -3,6 +3,8 @@
 #+KEYWORDS: CISCO, IOS, ACL
 
 
+
+
 * LISTAS DE CONTROL DE ACCESO
   + Las ACL son listas con reglas.
     - Cada regla define una condición que puede cumplir un paquete
@@ -46,37 +48,42 @@
   #+attr_latex: :width 4in :placement [H]
   #+attr_org: :width 400
   [[file:proceso-acl.png]]
-
+  
 * COMANDOS ÚTILES
+
+  - Una vez creada una ACL (más adelante) es necesario
+    - Asignar y desasignar ACL a interfaces
+    - Borrar y consultar ACL creadas
+
 ** Borrar una ACL
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    no access-list <numero>
-   #+END_EXAMPLE
+   #+END_SRC
 ** Mostrar las ACL existentes
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    show ip access-list
-   #+END_EXAMPLE
+   #+END_SRC
 ** ACL asociadas a una interfaz
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    show ip interface <interfaz>
-   #+END_EXAMPLE
+   #+END_SRC
    Es necesario mirar el apartado Inbound y Outbound 
 ** Asociar una ACL a una interfaz
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    interface <interfaz>
    ip access-group <numero ACL> <out o in>
-   #+END_EXAMPLE
+   #+END_SRC
 ** Eliminar una ACL de una interfaz
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    interface <interfaz>
    no ip access-group <numero ACL> <in o out>
-   #+END_EXAMPLE
+   #+END_SRC
 
 * ACL ESTANDAR
-  #+BEGIN_EXAMPLE
+  #+BEGIN_SRC cisco
   access-list access-list-number {permit|deny} 
   {host|source source-wildcard|any}.
-  #+END_EXAMPLE
+  #+END_SRC
   + Solo hacen referencia a las direcciones IP de origen. 
   #+REVEAL: split
   + Se puede especificar:
@@ -103,26 +110,26 @@
        
     #+REVEAL: split   
        - Permitir el host =10.0.1.1=
-         #+BEGIN_EXAMPLE
+         #+BEGIN_SRC cisco
          access-list 1 permit host 10.0.1.1
-         #+END_EXAMPLE
+         #+END_SRC
        - Prohibir la red =10.0.0.0/15=
-         #+BEGIN_EXAMPLE
+         #+BEGIN_SRC cisco
          access-list 1 deny 10.0.0.0 0.1.255.255
-         #+END_EXAMPLE
+         #+END_SRC
        - Permitir el resto de redes
-         #+BEGIN_EXAMPLE
+         #+BEGIN_SRC cisco
          access-list 1 permit any
-         #+END_EXAMPLE
+         #+END_SRC
        - Explicitar la regla final de denegación (va a estar de todas formas, pero ayuda a no olvidarse de ella)
-         #+BEGIN_EXAMPLE
+         #+BEGIN_SRC cisco
          access-list 1 deny any
-         #+END_EXAMPLE
+         #+END_SRC
        - Asociar esta ACL a la interfaz de entrada de la red =10.0.0.0/15=
-         #+BEGIN_EXAMPLE
+         #+BEGIN_SRC cisco
          interface Fa0/0
          ip access-group 1 in
-        #+END_EXAMPLE
+        #+END_SRC
 
 
 
@@ -134,35 +141,48 @@
   - Conexión previamente establecida
 
 ** IP
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list access-list-number [dynamic dynamic-name [timeout minutes]]
-   {deny | permit} protocol source source-wildcard destination   destination-wildcard
+   {deny | permit} protocol 
+   source source-wildcard destination   destination-wildcard
    [precedence precedence] [tos tos] [log | log-input]  
    [time-range time-range-name][fragments]
-   #+END_EXAMPLE
+   #+END_SRC
 ** Protocolo de mensajes de control de Internet (ICMP)
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list access-list-number [dynamic dynamic-name [timeout minutes]]
    {deny | permit}   icmp source source-wildcard destination destination-wildcard
    [icmp-type   [icmp-code] | [icmp-message]] [precedenceprecedence] [tos tos] 
    [log |   log-input] [time-range time-range-name][fragments]
-   #+END_EXAMPLE
+   #+END_SRC
 ** Protocolo de control de transporte (TCP)
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list access-list-number [dynamic dynamic-name [timeout minutes]]  
-   {deny | permit} tcp   source source-wildcard [operator [port]] 
+   {deny | permit} tcp   
+   source source-wildcard [operator [port]] 
    destination destination-wildcard   [operator [port]] [established] 
    [precedence precedence] [tos tos] [log |   log-input] 
    [time-range time-range-name][fragments]
-   #+END_EXAMPLE
+   #+END_SRC
 ** Protocolo de datagrama de usuario (UDP)
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list access-list-number [dynamic dynamic-name [timeout minutes]]   
-   {deny | permit} udp   source source-wildcard [operator [port]] 
+   {deny | permit} udp   
+   source source-wildcard [operator [port]] 
    destination destination-wildcard   [operator [port]]
    [precedence precedence] [tos tos] [log | log-input] 
    [time-range time-range-name][fragments]
-   #+END_EXAMPLE
+   #+END_SRC
+
+* PROCESO DE DEFINICIÓN DE ACLs
+  + Para definir las ACL de un router es necesario
+    - Determinar las interfaces del router
+    - Por cada interfaz:
+      - Determinar qué tráfico será permitido
+      - Determinar qué tráfico debe ser prohibido
+      - Ordenar las reglas para que no entren en conflicto (generalmente, de más concreta a más general)
+    - Es posible que se generen reglas redundantes 
+      - Pueden eliminarse, teniendo en cuenta que el tráfico prohibido es mejor eliminarlo cuanto antes de la red
 
 ** Ejercicio
    - Un router une las redes =192.168.1.0/24= (LAN) y =172.16.1.0/24= (DMZ). Se desea que:
@@ -172,30 +192,65 @@
 
    [[file:ejercicio-acl-ampliada.png]]
 
+** PLANTEAMIENTO
+   Interfaz Fa0/1 (LAN)
+   
+   |---+-----------------------------------------------+---------------------------------------------|
+   |   | Entrada                                       | Salida                                      |
+   |---+-----------------------------------------------+---------------------------------------------|
+   | / | <>                                            | <>                                          |
+   |   | ✗ PING (ICMP)                                 | ✗ PING (ICMP)                               |
+   |   | ✓ /DNS (UDP con destino 53)/                  | ✓ /DNS (UDP con origen 53)/                 |
+   |   | ✓ /TCP si se ha establecido desde la LAN/     | ✓ /TCP si se ha establecido desde la LAN/   |
+   |   | ✓ /TCP si es una conexión entrante de la DMZ/ | ✗ TCP si es una conexión entranta de la DMZ |
+   |   | ✗ UDP                                         | ✗ UDP                                       |
+   |---+-----------------------------------------------+---------------------------------------------|
+   #+REVEAL: split
+
+   Interfaz Fa0/0 (DMZ)
+   |---+---------------------------------------------+---------------------------------------------|
+   |   | Entrada                                     | Salida                                      |
+   |---+---------------------------------------------+---------------------------------------------|
+   | / | <>                                          | <>                                          |
+   |   | ✗ PING (ICMP)                               | ✗ PING (ICMP)                               |
+   |   | ✓ /DNS (UDP con origen 53)/                 | ✓ /DNS (UDP con destino 53)/                |
+   |   | ✓ /TCP si se ha establecido desde la LAN/   | ✓ /TCP si se ha establecido desde la LAN/   |
+   |   | ✗ TCP si es una conexión entranta de la DMZ | ✗ TCP si es una conexión entrante de la DMZ |
+   |   | ✗ UDP                                       | ✗ UDP                                       |
+   |---+---------------------------------------------+---------------------------------------------|
+  
+   #+REVEAL: split
+   - En el planteamiento anterior hay bastante redundancia, así que pueden agruparse muchas de esas reglas.
+     - Basta con prohibir ICMP en una sola interfaz, en un solo sentido
+     - Basta con controlar el tráfico TCP en una sola interfaz
+     - Basta con controlar el tráfico DNS en una sola interfaz
+
+
+
 ** Solución propuesta
+
    Esta ACL debe colocarse en la tarjeta de la LAN, sentido inbound.
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list 100 deny icmp any any
    access-list 100 permit udp any any eq domain
    access-list 100 permit tcp any any
    access-list 100 deny ip any any
    interface Fa0/0
    ip access-group 100 in
-   #+END_EXAMPLE
+   #+END_SRC
 
    Esta ACL debe colocarse en la tarjeta de la LAN, sentido outbound
-   #+BEGIN_EXAMPLE
+   #+BEGIN_SRC cisco
    access-list 101 permit udp any eq 53 any
    access-list 101 permit tcp any any established
    access-list 101 deny ip any any
    interface Fa0/0
    ip access-group 101 out
-   #+END_EXAMPLE
+   #+END_SRC
    
 
 * Práctica
 
-** Enunciado
    
    #+BEGIN_LATEX
    \textattachfile{ACL-inicial.pkt}{Fichero PKT inicial (adjunto al PDF)}
@@ -218,7 +273,7 @@
    + Servidor Web:
      - DMZ: =100.0.0.1/28=
    + Administrador remoto:
-     - =8.0.0.200=
+|     - =8.0.0.200=
 
 ** Solución	:noexport:
    Hay Muchas posibles soluciones. En esta se intenta que el Administrador tenga acceso IP completo (ICMP, TCP y UDP)
@@ -226,40 +281,42 @@
    - Internet y la LAN pueden acceder al servidor web, se permite al administrador.
 
      Regla out en Fa1/0
-    #+BEGIN_EXAMPLE
-    access-list 100 permit tcp any 100.0.0.1 eq www
+    #+BEGIN_SRC cisco
+    access-list 100 permit tcp any any eq www
     access-list 100 permit ip host 8.0.0.200 any
     access-list 100 deny ip any any
     interface fa1/0
     ip access-group 100 out
-    #+END_EXAMPLE
+
+    #+END_SRC
+
      Regla in en Fa1/0
-    #+BEGIN_EXAMPLE
+    #+BEGIN_SRC cisco
     access-list 104 permit tcp 100.0.0.1 eq www any
     access-list 104 permit ip any host 8.0.0.200 
     access-list 104 deny ip any any
     interface fa1/0
     ip access-group 104 in
-    #+END_EXAMPLE
+    #+END_SRC
 
    - La LAN solo puede acceder a los servicios WEB, se permite al administrador.
 
      Regla in en Fa0/0
-    #+BEGIN_EXAMPLE
+    #+BEGIN_SRC cisco
     access-list 101 permit tcp any any eq www
     access-list 101 permit ip any 8.0.0.200 0.0.0.0 
     access-list 101 deny ip any any
     interface fa0/0
     ip access-group 101 in
-    #+END_EXAMPLE
+    #+END_SRC
 
      Regla out en Fa0/0
-    #+BEGIN_EXAMPLE
+    #+BEGIN_SRC cisco
     access-list 102 permit ip host 8.0.0.200 any 
     access-list 102 permit tcp any eq 80 any established
     access-list 102 deny ip any any
     interface fa0/0
     ip access-group 102 out
-    #+END_EXAMPLE
+    #+END_SRC
 
 

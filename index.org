@@ -1,6 +1,7 @@
 #+INCLUDE: "./header.org"
 #+TITLE: 
 
-|----------------------|
-| [[file:chuletario-acl-cisco.html][ACL de routers CISCO]] |
-|----------------------|
+|---+----------------------+--------------+-------------------------------+--------------------------------+-------------------------------|
+| # | chuletario-acl-cisco | ACL de cisco | [[file:chuletario-acl-cisco.org]] | [[file:chuletario-acl-cisco.html]] | [[file:chuletario-acl-cisco.pdf]] |
+|---+----------------------+--------------+-------------------------------+--------------------------------+-------------------------------|
+#+TBLFM: $4='(concat "[[file:"  $2 ".org]]")::$5='(concat "[[file:"  $2 ".html]]")::$6='(concat "[[file:"  $2 ".pdf]]")
