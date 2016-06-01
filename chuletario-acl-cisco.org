@@ -227,11 +227,19 @@
 
      Regla out en Fa1/0
     #+BEGIN_EXAMPLE
-    access-list 100 permit tcp any any eq www
+    access-list 100 permit tcp any 100.0.0.1 eq www
     access-list 100 permit ip host 8.0.0.200 any
     access-list 100 deny ip any any
     interface fa1/0
     ip access-group 100 out
+    #+END_EXAMPLE
+     Regla in en Fa1/0
+    #+BEGIN_EXAMPLE
+    access-list 104 permit tcp 100.0.0.1 eq www any
+    access-list 104 permit ip any host 8.0.0.200 
+    access-list 104 deny ip any any
+    interface fa1/0
+    ip access-group 104 in
     #+END_EXAMPLE
 
    - La LAN solo puede acceder a los servicios WEB, se permite al administrador.
@@ -248,7 +256,7 @@
      Regla out en Fa0/0
     #+BEGIN_EXAMPLE
     access-list 102 permit ip host 8.0.0.200 any 
-    access-list 102 permit tcp any any established
+    access-list 102 permit tcp any eq 80 any established
     access-list 102 deny ip any any
     interface fa0/0
     ip access-group 102 out
