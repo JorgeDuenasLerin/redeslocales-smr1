@@ -292,7 +292,7 @@
 
      Regla in en Fa1/0
     #+BEGIN_SRC cisco
-    access-list 104 permit tcp 100.0.0.1 eq www any
+    access-list 104 permit tcp host 100.0.0.1 eq www any
     access-list 104 permit ip any host 8.0.0.200 
     access-list 104 deny ip any any
     interface fa1/0
