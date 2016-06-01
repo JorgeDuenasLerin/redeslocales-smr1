@@ -195,29 +195,29 @@
 ** PLANTEAMIENTO
    Interfaz Fa0/1 (LAN)
    
-   |---+-----------------------------------------------+---------------------------------------------|
-   |   | Entrada                                       | Salida                                      |
-   |---+-----------------------------------------------+---------------------------------------------|
-   | / | <>                                            | <>                                          |
-   |   | ✗ PING (ICMP)                                 | ✗ PING (ICMP)                               |
-   |   | ✓ /DNS (UDP con destino 53)/                  | ✓ /DNS (UDP con origen 53)/                 |
-   |   | ✓ /TCP si se ha establecido desde la LAN/     | ✓ /TCP si se ha establecido desde la LAN/   |
-   |   | ✓ /TCP si es una conexión entrante de la DMZ/ | ✗ TCP si es una conexión entranta de la DMZ |
-   |   | ✗ UDP                                         | ✗ UDP                                       |
-   |---+-----------------------------------------------+---------------------------------------------|
+   |---+-----+---------------------------------------------+-----+-------------------------------------------|
+   |   |     | Entrada                                     |     | Salida                                    |
+   |---+-----+---------------------------------------------+-----+-------------------------------------------|
+   | / | <   | >                                           | <   | >                                         |
+   |   | /X/ | PING (ICMP)                                 | /X/ | PING (ICMP)                               |
+   |   | /V/ | /DNS (UDP con destino 53)/                  | /V/ | /DNS (UDP con origen 53)/                 |
+   |   | /V/ | /TCP si se ha establecido desde la LAN/     | /V/ | /TCP si se ha establecido desde la LAN/   |
+   |   | /V/ | /TCP si es una conexión entrante de la DMZ/ | /X/ | TCP si es una conexión entranta de la DMZ |
+   |   | /X/ | UDP                                         | /X/ | UDP                                       |
+   |---+-----+---------------------------------------------+-----+-------------------------------------------|
    #+REVEAL: split
 
    Interfaz Fa0/0 (DMZ)
-   |---+---------------------------------------------+---------------------------------------------|
-   |   | Entrada                                     | Salida                                      |
-   |---+---------------------------------------------+---------------------------------------------|
-   | / | <>                                          | <>                                          |
-   |   | ✗ PING (ICMP)                               | ✗ PING (ICMP)                               |
-   |   | ✓ /DNS (UDP con origen 53)/                 | ✓ /DNS (UDP con destino 53)/                |
-   |   | ✓ /TCP si se ha establecido desde la LAN/   | ✓ /TCP si se ha establecido desde la LAN/   |
-   |   | ✗ TCP si es una conexión entranta de la DMZ | ✗ TCP si es una conexión entrante de la DMZ |
-   |   | ✗ UDP                                       | ✗ UDP                                       |
-   |---+---------------------------------------------+---------------------------------------------|
+   |---+-----+-------------------------------------------+-----+-------------------------------------------|
+   |   |     | Entrada                                   |     | Salida                                    |
+   |---+-----+-------------------------------------------+-----+-------------------------------------------|
+   | / | <   | >                                         | <   | >                                         |
+   |   | /X/ | PING (ICMP)                               | /X/ | PING (ICMP)                               |
+   |   | /V/ | /DNS (UDP con origen 53)/                 | /V/ | /DNS (UDP con destino 53)/                |
+   |   | /V/ | /TCP si se ha establecido desde la LAN/   | /V/ | /TCP si se ha establecido desde la LAN/   |
+   |   | /X/ | TCP si es una conexión entranta de la DMZ | /X/ | TCP si es una conexión entrante de la DMZ |
+   |   | /X/ | UDP                                       | /X/ | UDP                                       |
+   |---+-----+-------------------------------------------+-----+-------------------------------------------|
   
    #+REVEAL: split
    - En el planteamiento anterior hay bastante redundancia, así que pueden agruparse muchas de esas reglas.
