@@ -33,6 +33,7 @@
 #+REVEAL_ROOT: ./reveal.js
 #+OPTIONS: reveal_single_file:t
 #+REVEAL_INIT_SCRIPT: width: '100%'
+#+REVEAL_POSTAMBLE: IES Rey Fernando VI
 
 
 

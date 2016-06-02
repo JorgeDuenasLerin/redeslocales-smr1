@@ -1,7 +1,7 @@
 #+INCLUDE: "./header.org"
 #+TITLE: Listas de control de acceso en routers CISCO
 #+KEYWORDS: CISCO, IOS, ACL
-
+#+REVEAL_THEME: serif
 
 
 
@@ -13,11 +13,11 @@
   #+REVEAL: split
   + Se identifican por un número
     - Estándar: 
-      - 1 a 99
-      - 1300 a 1999
+      - =1= a =99=
+      - =1300= a =1999=
     - Ampliadas: 
-      - 100 a 199
-      - 2000 a 2699
+      - =100= a =199=
+      - =2000= a =2699=
   + En versiones recientes de IOS (11.2) se pueden usar también nombres de ACL      
   + Una interfaz puede tener una ACL asociada en cada sentido
     - Entrada de paquetes (Inbound)
@@ -192,7 +192,7 @@
 
    [[file:ejercicio-acl-ampliada.png]]
 
-** PLANTEAMIENTO
+** Planteamiento
    Interfaz Fa0/1 (LAN)
    
    |---+-----+---------------------------------------------+-----+-------------------------------------------|
