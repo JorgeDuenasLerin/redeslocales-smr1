@@ -273,7 +273,7 @@
    + Servidor Web:
      - DMZ: =100.0.0.1/28=
    + Administrador remoto:
-|     - =8.0.0.200=
+     - =8.0.0.200=
 
 ** Solución	:noexport:
    Hay Muchas posibles soluciones. En esta se intenta que el Administrador tenga acceso IP completo (ICMP, TCP y UDP)
@@ -319,4 +319,4 @@
     ip access-group 102 out
     #+END_SRC
 
-
+    
