@@ -1,0 +1,77 @@
+#+INCLUDE: "./header.org"
+#+TITLE: Presentación de proyectos
+#+KEYWORDS: proyecto, fct
+
+
+
+* Entrega de proyecto
+  - El proyecto se entrega antes de la presentación, para que los profesores podamos estudiarlo
+    - Documento impreso 
+    - Código fuente y documentación en CD
+
+
+* Defensa del proyecto
+  - El proyecto se defiende en una Presentación
+    - Duración: 30 minutos
+    - Preguntas del tribunal: 15 minutos
+
+** Qué se espera en la presentación
+  - Presentación "comercial"
+    - Presentación de los alumnos
+    - Presentación del problema a resolver por la aplicación
+  - Presentación de varios casos de uso
+    - Acceso como usuario (/front end/)
+      - Registro
+      - /CRUD/ de las entidades que maneje la aplicación
+      - Reglas de negocio que sigue la aplicación
+    - Acceso como administrador (/back end/)
+
+** Qué no se espera en la presentación
+  - Presentación "técnica"
+    - Esquema de base de datos
+    - Detalles de la implementación
+
+** Qué cosas son "técnicas", pero también "comerciales"
+  - Aquellas que tienen valor desde el punto de vista del usuario, o del "comprador" de la aplicación:
+    - "El framework /xxxxxx/ es el más usado y permite una rápida evolución de la aplicación con nuevos /plugins/..."
+    - "El framework /xxxxxx/ tiene muchos temas que..."
+    - "El uso del repositorio /xxxxx/ nos ha permitido un trabajo colaborativo para desarrollar más funcionalidad en el mismo tiempo..."
+    - "La aplicación puede desplegarse fácilmente el los contenedores de tipo..."
+    - "Los test unitarios permiten detectar errores cuando se amplíe la aplicación..."
+
+* Consejos para la Defensa
+** Preparación del entorno
+   - Determinar qué recursos necesitáis
+     - Internet
+     - Portátil
+     - Proyector
+     - Rotuladores
+     - Servidores HTTP/Base de datos
+     - Red local
+
+** Planes *B*
+   - Si falla el portátil
+     - Máquina virtual/otro portátil
+   - Si falla internet 
+     - Recursos en local
+     - Móvil 3G
+   - Si falla el hosting
+     - Tener más de un hosting
+     
+** Ensayos
+   - Debería haber un guión que se ha ensayado un par de veces
+     - Orden de los alumnos
+     - Qué muestra cada alumno (casos de uso)
+     - Qué datos se necesitan previamente en la base de datos
+     - Qué datos se modificarán durante la presentación
+   - El tiempo de cada alumno debe ser similar
+     - Para una presentación más /dinámica/, un alumno puede encargarse del ordenador, y otro puede ser el /showman/
+
+** Inspiración
+   - Positivas
+     - Steve Jobs presentando iPads
+     - Esa demo que os hicieron y que os gustó
+   - Negativas
+     - Esa demo que os aburrió
+     - Ese profe que no entendíais
+   

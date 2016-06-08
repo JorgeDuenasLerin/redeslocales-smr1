@@ -31,3 +31,12 @@ Un router CISCO tiene asignada la IP 192.168.20.254/24 a la interfaz Fa0/0 y la 
 </ul>
 {
 }
+
+Un router CISCO tiene asignada la IP 192.168.20.254/24 a la interfaz Fa0/0 (LAN) y la IP 192.168.10.254/24 a la interfaz Fa1/0 (DMZ). Escribe los comandos necesarios para que:
+<ul>
+        <li>La LAN pueda acceder a los servicios DNS, HTTP y HTTPS de la DMZ</li>
+        <li>La LAN no pueda utilizar el protocolo ICMP con la DMZ</li>
+        <li>La DMZ no pueda iniciar comunicaciones TCP con la LAN</li>
+</ul>
+{
+}
