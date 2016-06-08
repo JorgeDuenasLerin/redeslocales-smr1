@@ -111,3 +111,8 @@
      - Esa demo que os aburrió
      - Ese profe que no entendíais
    
+* Más información
+  - [[https://docs.google.com/document/d/1y39BN_K4BxRba5E5W_iRZo8RxCXw1KZ_YB6c6CU4weE/edit#][Pautas de realización y calificación]]
+  - [[http://aulavirtual2.educa.madrid.org/file.php/11795/proyecto_2013/Requisitos_minimos.pdf][Requisitos mínimos]]
+  - [[http://aulavirtual2.educa.madrid.org/file.php/11795/proyecto_2013/O20092694.pdf][Normativa]]
+    
