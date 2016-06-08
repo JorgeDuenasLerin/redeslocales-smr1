@@ -67,6 +67,16 @@
     - Esquema de base de datos
     - Detalles de la implementación
 
+** ¿No puedo contar nada técnico?
+  - Los profesores preguntaremos cosas técnicas
+  - Se puede hacer un apartado diferenciado de *detalles técnicos*
+    - Problemas más difíciles de resolver
+    - Partes del código que mejoran conceptos /de negocio/
+      - Eficiencia
+      - Tolerancia a fallos
+      - Adaptabilidad/posibilidades de mejora
+      - ...
+
 ** Qué cosas son "técnicas", pero también "comerciales"
   - Aquellas que tienen valor desde el punto de vista del usuario, o del "comprador" de la aplicación:
     - "El framework /xxxxxx/ es el más usado y permite una rápida evolución de la aplicación con nuevos /plugins/..."
